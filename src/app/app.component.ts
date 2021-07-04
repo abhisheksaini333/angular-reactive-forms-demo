@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -21,10 +22,10 @@ export class AppComponent implements OnInit {
     this.registerForm = this.formBuilder.group(
       {
         title: ['', Validators.required],
-        firstName: ['', [Validators.required, Validators.pattern('[a-zA-Z*]')]],
-        lastName: ['', [Validators.required, Validators.pattern('[a-zA-Z*]')]],
+        firstName: ['John', [Validators.required, Validators.pattern('[a-zA-Z*]')]],
+        lastName: ['Doe', [Validators.required, Validators.pattern('[a-zA-Z*]')]],
         dob: ['', Validators.required],
-        // age: [18, [Validators.required, Validators.min(18), Validators.max(99)]],
+        age: ['', Validators.min(10)],
         email: ['', [Validators.required, Validators.email]],
         password: ['', [Validators.required, Validators.minLength(6)]],
         confirmPassword: ['', Validators.required]
@@ -32,6 +33,47 @@ export class AppComponent implements OnInit {
         validator: this.mustMatch('password', 'confirmPassword')
       }
     )
+
+    setTimeout(() => {
+      this.setDefaultValues();
+    }, 500)
+  }
+
+  setDefaultValues() {
+    this.registerForm.setValue(
+      {
+        title: 'Mr',
+        firstName: 'Abhishek',
+        lastName: 'Saini',
+        dob: formatDate(new Date('1900-09-07'), 'yyyy-MM-dd', 'en'),
+        email: 'abhishek_saini@live.com',
+        password: '1234567',
+        confirmPassword: '1234567',
+        age: 18
+      }
+    )
+  }
+
+  pathTheValue() {
+    this.registerForm.patchValue(
+      {
+        firstName: 'Amandeep',
+        lastName: 'Singh',
+        dob: formatDate(new Date('1900-09-07'), 'yyyy-MM-dd', 'en')
+      }
+    )
+  }
+
+  resetTheForm() {
+    this.registerForm.reset();
+  }
+
+  setValidationOnAge() {
+    this.registerForm.controls['age'].setValidators(Validators.requiredTrue);
+  }
+
+  removeValidationOnAge() {
+    this.registerForm.controls['age'].clearValidators();
   }
 
   mustMatch(pwd1: string, pwd2: string) {

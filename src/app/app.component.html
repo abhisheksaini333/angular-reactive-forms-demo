@@ -30,10 +30,15 @@
         </div>
         <br/>
         <div class="form-row row">
-          <div class="form-group col-6">
+          <div class="form-group col-4">
             <label>Date of Birth</label>
             <input type="date" class="form-control" formControlName="dob"/>
             <div *ngIf="submitted && f.dob.errors && f.dob.errors.required" class="text-danger">DOB is required</div>
+          </div>
+          <div class="form-group col-2">
+            <label>Age</label>
+            <input type="text" class="form-control" formControlName="age"/>
+            <div *ngIf="submitted && f.age.errors && f.age.errors.required" class="text-danger">Age is required</div>
           </div>
           <div class="form-group col-6">
             <label>Email</label>
@@ -63,6 +68,11 @@
           <button class="btn btn-primary m-2" type="submit">Submit</button>
           <button class="btn btn-secondary" type="reset">Reset</button>
         </div>
+        <br/>
+          <button class="btn btn-primary m-2" (click)="pathTheValue()">Patch Value</button>
+          <button class="btn btn-primary m-2" (click)="resetTheForm()">Reset Form</button>
+          <button class="btn btn-primary m-2" (click)="setValidationOnAge()">Set Validation on Age</button>
+          <button class="btn btn-primary m-2" (click)="removeValidationOnAge()">Remove Validation on Age</button>
       </form>
     </div>
   </div>
